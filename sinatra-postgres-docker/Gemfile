@@ -1,0 +1,22 @@
+source 'https://rubygems.org'
+
+ruby '3.1.2'
+
+gem 'puma'
+gem 'sinatra'
+
+# ORM
+gem 'activerecord'
+gem 'sinatra-activerecord'
+gem 'pg'
+gem 'rake'
+
+group :development, :test do
+  gem 'rerun' # nao consegui botar pra funfar junto com o puma
+end
+
+
+# group :development do
+#  gem 'sqlite3'
+#  gem 'tux'
+# end

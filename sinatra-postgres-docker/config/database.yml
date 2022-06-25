@@ -1,0 +1,19 @@
+development:
+  adapter: postgresql
+  encoding: unicode
+  database: sinatra-api-development
+  pool: 2
+  username: postgres
+  password: postgres
+  host: database     #defaults to 127.0.0.1
+  port: 5432
+
+production:
+  adapter: postgresql
+  encoding: unicode
+  database: sinatra-api-development
+  pool: 2
+  username: postgres
+  password: postgres
+  host: database     #defaults to 127.0.0.1
+  port: 5432

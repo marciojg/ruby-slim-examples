@@ -1,0 +1,58 @@
+version: '3'
+
+services:
+  web:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    volumes:
+      - .:/usr/src/app
+    command:
+      - /bin/bash
+      - -c
+      - |
+        rake db:seed
+        bundle exec puma -b tcp://0.0.0.0:3000
+    # rake db:seed
+    # bin/rake db:setup
+    # bin/bundle exec foreman start
+    ports:
+      - 3000:3000
+    # environment:
+    #   NODE_ENV: development
+    #   DEBUG: "*"
+    # depends_on:
+    #   - database
+    networks:
+      - sinatra_network
+
+  database:
+    image: postgres:11
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+      POSTGRES_DB: sinatra-api-development
+    ports:
+      - 4445:5432
+    # volumes:
+    #   - ./data/:/docker-entrypoint-initdb.d
+    networks:
+      - sinatra_network
+
+  pgadmin:
+    image: dpage/pgadmin4
+    restart: unless-stopped
+    environment:
+      PGADMIN_DEFAULT_EMAIL: admin@admin.com
+      PGADMIN_DEFAULT_PASSWORD: root
+    depends_on:
+      - database
+    ports:
+      - 4446:80
+    networks:
+      - sinatra_network
+
+networks:
+  sinatra_network:
+    name: sinatra_network
+    driver: bridge
